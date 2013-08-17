@@ -44,3 +44,5 @@ module.exports = (grunt) ->
           parallel: 8
           launch_in_dev: ['PhantomJS'],
           launch_in_ci: ['PhantomJS', 'Chrome', 'Firefox', 'Safari', 'IE7', 'IE8', 'IE9']
+
+  grunt.registerTask 'default', ['testem']
