@@ -70,6 +70,8 @@ task = (grunt, mode) ->
   options      = @config("options") || {}
 
   # Options defaults
+  options['launch_in_ci']  = [grunt.option('launch')] if grunt.option('launch')
+  options['launch_in_edv'] = [grunt.option('launch')] if grunt.option('launch')
   options['reporter']    ||= grunt.option('reporter')
   options['watch_files'] ||= files
   options['serve_files'] ||= files.map (p) -> "http://localhost:#{assets_port}/#{p}"
