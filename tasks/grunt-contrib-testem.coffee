@@ -13,9 +13,21 @@ serveAssets = (port, setup) ->
   environment = new Mincer.Environment
   environment.appendPath process.cwd()
   setup?(environment, Mincer)
+  mincer = new Mincer.Server(environment)
 
   server = connect()
-  server.use '/', new Mincer.Server(environment)
+  server.use '/', (req, res) ->
+    try
+      asset = environment.findAsset req.url.substring(1)
+
+      unless asset
+        res.end "console.error('Not found: #{req.url}')"
+      else
+        mincer.handle req, res
+    catch error
+      offset = "#{error.location['first_line']}:#{error.location['first_column']}"
+      res.end "console.error('Compilation error: #{req.url} at #{offset}')"
+
   instance = server.listen port
 
   instance.addListener 'connection', (stream) ->
