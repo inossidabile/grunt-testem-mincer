@@ -9,11 +9,20 @@ connect = require 'connect'
 # @param [Integer] port              Port to listen
 # @param [Function] setup            Configurator to customize Mincer behavior
 #
-serveAssets = (port, setup) ->
+serveAssets = (port, warmup, setup) ->
   environment = new Mincer.Environment
   environment.appendPath process.cwd()
   setup?(environment, Mincer)
   mincer = new Mincer.Server(environment)
+
+  Mincer.logger.use console
+
+  # Warmup before we actually run stuff in browsers
+  # to keep parallel loading settled
+  warmup.each (path) ->
+    try
+      environment.findAsset path
+    catch error
 
   server = connect()
   server.use '/', (req, res) ->
@@ -23,7 +32,8 @@ serveAssets = (port, setup) ->
       unless asset
         res.end "console.error('Not found: #{req.url}')"
       else
-        mincer.handle req, res
+        res.setHeader 'Content-Type', asset.contentType
+        res.end asset.buffer
     catch error
       offset = "#{error.location['first_line']}:#{error.location['first_column']}"
       res.end "console.error('Compilation error: #{req.url} at #{offset}')"
@@ -78,7 +88,7 @@ task = (grunt, mode) ->
 
   # Run and setup testem and assets servers
   testem = new Testem
-  assets = serveAssets(assets_port, assets_setup)
+  assets = serveAssets assets_port, files, assets_setup
 
   testem[mode] options, (code) ->
     # When testem is down – shutdown assets server,
