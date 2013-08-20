@@ -1,4 +1,7 @@
-# grunt-contrib-testem [![Build Status](https://travis-ci.org/inossidabile/grunt-contrib-testem.png?branch=master)](https://travis-ci.org/inossidabile/grunt-contrib-testem)
+# grunt-contrib-testem
+
+[![NPM version](https://badge.fury.io/js/grunt-contrib-testem.png)](http://badge.fury.io/js/grunt-contrib-testem)
+[![Build Status](https://travis-ci.org/inossidabile/grunt-contrib-testem.png?branch=master)](https://travis-ci.org/inossidabile/grunt-contrib-testem)
 
 > Run tests with Testem in a convenient way:
 >
