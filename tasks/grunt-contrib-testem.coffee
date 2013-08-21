@@ -11,8 +11,8 @@ connect = require 'connect'
 #
 serveAssets = (port, warmup, setup) ->
   environment = new Mincer.Environment
+  environment = setup(environment, Mincer) if setup?
   environment.appendPath process.cwd()
-  setup?(environment, Mincer)
   mincer = new Mincer.Server(environment)
 
   Mincer.logger.use console
@@ -35,8 +35,7 @@ serveAssets = (port, warmup, setup) ->
         res.setHeader 'Content-Type', asset.contentType
         res.end asset.buffer
     catch error
-      offset = "#{error.location['first_line']}:#{error.location['first_column']}"
-      res.end "console.error('Compilation error: #{req.url} at #{offset}')"
+      res.end "console.error(#{JSON.stringify error.message})"
 
   instance = server.listen port
 

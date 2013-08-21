@@ -16,6 +16,7 @@ module.exports = (grunt) ->
           setup: (environment, Mincer) ->
             Mincer.CoffeeEngine.configure bare: false      # Bare should be false
             environment.appendPath 'app'                   # Appliation should be built from this path
+            environment
         options:
           watch_files: [
             '**/*.*'                                       # Rerun tests when ANYTHING changes

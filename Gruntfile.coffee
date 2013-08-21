@@ -35,6 +35,7 @@ module.exports = (grunt) ->
           setup: (environment, Mincer) ->
             Mincer.CoffeeEngine.configure bare: false
             environment.appendPath 'spec/custom/app'
+            environment
         options:
           watch_files: [
             'spec/custom/**/*.*'
