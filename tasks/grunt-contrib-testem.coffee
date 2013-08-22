@@ -2,6 +2,16 @@ Sugar   = require 'sugar'
 Testem  = require 'testem'
 Mincer  = require 'mincer'
 connect = require 'connect'
+Path    = require 'path'
+
+buildEnvironment = (setup) ->
+  environment = new Mincer.Environment
+  environment = setup(environment, Mincer) if setup?
+  environment.appendPath process.cwd()
+
+  Mincer.logger.use console
+
+  environment
 
 #
 # Runs local server with mincer on the given port
@@ -9,13 +19,8 @@ connect = require 'connect'
 # @param [Integer] port              Port to listen
 # @param [Function] setup            Configurator to customize Mincer behavior
 #
-serveAssets = (port, warmup, setup) ->
-  environment = new Mincer.Environment
-  environment = setup(environment, Mincer) if setup?
-  environment.appendPath process.cwd()
-  mincer = new Mincer.Server(environment)
-
-  Mincer.logger.use console
+serveAssets = (port, warmup, environment) ->
+  mincer = new Mincer.Server
 
   # Warmup before we actually run stuff in browsers
   # to keep parallel loading settled
@@ -73,21 +78,39 @@ task = (grunt, mode) ->
   @config = (path) => grunt.config("testem.#{@target}.#{path}")
 
   # General settings
-  assets_port  = @config("assets.port") || 7358
-  assets_setup = @config("assets.setup")
-  files        = grunt.file.expand(@config("src") || [])
-  options      = @config("options") || {}
+  assets_port = @config("assets.port") || 7358
+  files       = {}
+  options     = @config("options") || {}
+  environment = buildEnvironment @config("assets.setup")
+
+  # We don't need to seek for files if they won't be used anyway
+  if !options['watch_files'] || !['serve_files']
+
+    # Traverse every Mincer path saving priority and emulating paths exclusions
+    if environment.paths.length > 1
+      Array.create(@config("src") || []).each (mask) =>
+        environment.paths.each (path) =>
+          if mask[0] != '!'
+            grunt.file.expand({cwd: path}, mask).each (match) ->
+              files[match] ||= Path.join(path, match)
+          else
+            grunt.file.expand({cwd: path}, mask.substring(1)).each (match) ->
+              delete files[match]
+    else
+      cwd = environment.paths.first()
+      grunt.file.expand({cwd: cwd}, @config("src") || []).each (match) ->
+        files[match] = Path.join(cwd, match)
 
   # Options defaults
   options['launch_in_ci']  = [grunt.option('launch')] if grunt.option('launch')
   options['launch_in_edv'] = [grunt.option('launch')] if grunt.option('launch')
   options['reporter']    ||= grunt.option('reporter')
-  options['watch_files'] ||= files
-  options['serve_files'] ||= files.map (p) -> "http://localhost:#{assets_port}/#{p}"
+  options['watch_files'] ||= Object.values(files)
+  options['serve_files'] ||= Object.keys(files).map (p) -> "http://localhost:#{assets_port}/#{p}"
 
   # Run and setup testem and assets servers
   testem = new Testem
-  assets = serveAssets assets_port, files, assets_setup
+  assets = serveAssets assets_port, Object.keys(files), environment
 
   testem[mode] options, (code) ->
     # When testem is down – shutdown assets server,
