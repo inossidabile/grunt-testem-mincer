@@ -1,4 +1,3 @@
-Sugar   = require 'sugar'
 Testem  = require 'testem'
 Mincer  = require 'mincer'
 connect = require 'connect'
@@ -24,7 +23,7 @@ serveAssets = (port, warmup, environment) ->
 
   # Warmup before we actually run stuff in browsers
   # to keep parallel loading settled
-  warmup.each (path) ->
+  warmup.forEach (path) ->
     try
       environment.findAsset path
     catch error
@@ -88,24 +87,24 @@ task = (grunt, mode) ->
 
     # Traverse every Mincer path saving priority and emulating paths exclusions
     if environment.paths.length > 1
-      Array.create(@config("src") || []).each (mask) =>
-        environment.paths.each (path) =>
+      Array.create(@config("src") || []).forEach (mask) =>
+        environment.paths.forEach (path) =>
           if mask[0] != '!'
-            grunt.file.expand({cwd: path}, mask).each (match) ->
+            grunt.file.expand({cwd: path}, mask).forEach (match) ->
               files[match] ||= Path.join(path, match)
           else
-            grunt.file.expand({cwd: path}, mask.substring(1)).each (match) ->
+            grunt.file.expand({cwd: path}, mask.substring(1)).forEach (match) ->
               delete files[match]
     else
-      cwd = environment.paths.first()
-      grunt.file.expand({cwd: cwd}, @config("src") || []).each (match) ->
+      cwd = environment.paths[0]
+      grunt.file.expand({cwd: cwd}, @config("src") || []).forEach (match) ->
         files[match] = Path.join(cwd, match)
 
   # Options defaults
   options['launch_in_ci']  = [grunt.option('launch')] if grunt.option('launch')
   options['launch_in_edv'] = [grunt.option('launch')] if grunt.option('launch')
   options['reporter']    ||= grunt.option('reporter')
-  options['watch_files'] ||= Object.values(files)
+  options['watch_files'] ||= Object.keys(files).map (p) -> files[p]
   options['serve_files'] ||= Object.keys(files).map (p) -> "http://localhost:#{assets_port}/#{p}"
 
   # Run and setup testem and assets servers
@@ -136,8 +135,9 @@ module.exports = (grunt) ->
     grunt.option('reporter', 'dot') unless grunt.option('reporter')
 
     unless task.call @, grunt, 'startCI'
-      Object.each grunt.config.get('testem'), (key, value) ->
-        grunt.task.run "testem:ci:#{key}"
+      for key, value of grunt.config.get('testem')
+        do (key, value) ->
+          grunt.task.run "testem:ci:#{key}"
 
   grunt.registerTask 'testem:run', 'Run one environment in dev mode', ->
     unless task.call @, grunt, 'startDev'
