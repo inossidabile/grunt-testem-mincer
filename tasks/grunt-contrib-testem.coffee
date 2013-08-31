@@ -87,7 +87,10 @@ task = (grunt, mode) ->
 
     # Traverse every Mincer path saving priority and emulating paths exclusions
     if environment.paths.length > 1
-      Array.create(@config("src") || []).forEach (mask) =>
+      src = @config("src") || []
+      src = [src] unless Array.isArray src
+
+      src.forEach (mask) =>
         environment.paths.forEach (path) =>
           if mask[0] != '!'
             grunt.file.expand({cwd: path}, mask).forEach (match) ->
