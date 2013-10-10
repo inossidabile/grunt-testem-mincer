@@ -55,7 +55,7 @@ grunt.initConfig({
   }
 ```
 
-In the example given we pass coffee files straight into the `src` and there's no mistake in that. `grunt-contrib-test` will chew it for you :godmode:.
+In the example given we pass coffee files straight into the `src` and there's no mistake in that. `grunt-contrib-testem` will chew it for you :godmode:.
 
 There are two modes that you can run tests at:
   * `grunt testem:ci:<environment>` command-line CI mode
