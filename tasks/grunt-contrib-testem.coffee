@@ -132,7 +132,8 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'testem:launchers', 'List available launchers', ->
     done = @async()
-    grunt.util.spawn {cmd: "node_modules/.bin/testem", args: ['launchers'], opts: {stdio: [0,1,2]}}, done
+    testemPath = __dirname + "/../node_modules/.bin/testem"
+    grunt.util.spawn {cmd: , testemPath, args: ['launchers'], opts: {stdio: [0,1,2]}}, done
 
   grunt.registerTask 'testem:ci', 'Run some environments in CI mode', ->
     grunt.option('reporter', 'dot') unless grunt.option('reporter')
