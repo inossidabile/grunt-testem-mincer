@@ -2,7 +2,6 @@
 
 [![NPM version](https://badge.fury.io/js/grunt-contrib-testem.png)](http://badge.fury.io/js/grunt-contrib-testem)
 [![Build Status](https://travis-ci.org/inossidabile/grunt-contrib-testem.png?branch=master)](https://travis-ci.org/inossidabile/grunt-contrib-testem)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/inossidabile/grunt-contrib-testem/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 > Run tests with Testem in a convenient way:
 >
@@ -138,3 +137,5 @@ Huge thanks goes to [Toby Ho](https://github.com/airportyh/), the original autho
 Copyright 2013 [Boris Staal](http://staal.io)
 
 It is free software, and may be redistributed under the terms of MIT license.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/inossidabile/grunt-contrib-testem/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
