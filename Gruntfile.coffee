@@ -12,6 +12,14 @@ module.exports = (grunt) ->
         push: false
 
     testem:
+      'tricky.basic':
+        src: [
+          'spec/basic/**/*.*'
+        ]
+        options:
+          parallel: 8
+          launch_in_dev: ['PhantomJS'],
+          launch_in_ci: ['PhantomJS', 'Chrome', 'Firefox', 'Safari', 'IE7', 'IE8', 'IE9']
       basic:
         src: [
           'spec/basic/**/*.*'

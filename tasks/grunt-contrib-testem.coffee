@@ -65,7 +65,7 @@ serveAssets = (port, warmup, environment) ->
 #
 task = (grunt, mode) ->
   grunt.config.requires 'testem'
-  @target = @args[0]
+  @target = @args[0]?.replace '.', '\\.'
 
   # No target? Ppppfff.....
   return false unless @target
