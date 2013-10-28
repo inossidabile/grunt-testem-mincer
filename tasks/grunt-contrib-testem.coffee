@@ -31,10 +31,11 @@ serveAssets = (port, warmup, environment) ->
   server = connect()
   server.use '/', (req, res) ->
     try
-      asset = environment.findAsset req.url.substring(1)
+      url   = unescape req.url
+      asset = environment.findAsset url.substring(1)
 
       unless asset
-        res.end "console.error('Not found: #{req.url}')"
+        res.end "console.error('Not found: #{url}')"
       else
         res.setHeader 'Content-Type', asset.contentType
         res.end asset.buffer
