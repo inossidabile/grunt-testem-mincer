@@ -111,15 +111,21 @@ task = (grunt, mode) ->
   options['watch_files'] ||= Object.keys(files).map (p) -> files[p]
   options['serve_files'] ||= Object.keys(files).map (p) -> "http://localhost:#{assets_port}/#{p}"
 
+  grunt.log.debug "Serving #{options['serve_files'].length} files..."
+
   # Run and setup testem and assets servers
   testem = new Testem
   assets = serveAssets assets_port, Object.keys(files), environment
 
   testem[mode] options, (code) ->
-    # When testem is down – shutdown assets server,
-    # free the port and finish the task
-    assets.close ->
-      done(!code? || code == 0)
+    if grunt.option('debug')
+      grunt.log.debug "Assets are on http://localhost:#{assets_port}/ – press ctr+c to finalize session"
+      grunt.log.debug " - #{file}" for file in options['serve_files']
+    else
+      # When testem is down – shutdown assets server,
+      # free the port and finish the task
+      assets.close ->
+        done(!code? || code == 0)
 
   true
 
