@@ -18,7 +18,7 @@
     "node": "*"
   },
   "dependencies": {
-    "testem": "=0.6.2",
+    "testem": "~0.6.5",
     "sugar": "~1.3.8",
     "mincer": "~0.5.5",
     "connect": "~2.8.5",
