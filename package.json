@@ -1,7 +1,7 @@
 {
   "name": "grunt-contrib-testem",
   "description": "Testem programmatic runner enhanced with Mincer preprocessing",
-  "version": "0.5.14",
+  "version": "0.5.15",
   "homepage": "https://github.com/inossidabile/grunt-contrib-testem",
   "author": {
     "name": "Boris Staal",
@@ -22,7 +22,7 @@
     "sugar": "~1.3.8",
     "mincer": "~0.5.5",
     "connect": "~2.8.5",
-    "coffee-script": "~1.6.3"
+    "coffee-script": ">=1.6.3"
   },
   "keywords": [
     "gruntplugin",
