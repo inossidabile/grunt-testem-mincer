@@ -50,6 +50,29 @@ serveAssets = (port, warmup, environment) ->
   instance
 
 #
+# Output stream wrapper to pipe the output of Testem into a reporting output file
+#    * Overrides the function process.stdout.write
+#
+# @param [String] reportFile     File path for the output reporting file
+# 
+# @return [Function] Returns a function to call that reinstates the process.stdout.write
+#
+wrapOutputStreamForReporting = (reportFile) ->
+  fs = require('fs')
+  original_std_out_write = process.stdout.write
+
+  #Truncate the file if exists
+  fs.writeFileSync reportFile, "", { flags: "w", encoding: "utf-8" }
+
+  process.stdout.write = (chunk, encoding, callback) ->
+    #Write to both the stout and report file
+    fs.appendFileSync reportFile, chunk, { flags: "w", encoding: "utf-8" }
+    original_std_out_write.call process.stdout, chunk, encoding, callback
+
+  ()->
+    process.stdout.write = original_std_out_write
+
+#
 # To make magic work we are doing the following:
 #
 #   * Start connect() on localhost:<port> serving Mincer (with project basedir as load path)
@@ -82,6 +105,7 @@ task = (grunt, mode) ->
   files       = {}
   options     = @config("options") || {}
   environment = buildEnvironment @config("assets.setup")
+  report_file = @config("report_file")
 
   # We don't need to seek for files if they won't be used anyway
   if !options['watch_files'] || !['serve_files']
@@ -118,6 +142,9 @@ task = (grunt, mode) ->
   testem = new Testem
   assets = serveAssets assets_port, Object.keys(files), environment
 
+  #Wrap the output stream if the a report file is configured
+  reporterCallback = wrapOutputStreamForReporting report_file if report_file
+
   testem[mode] options, (code) ->
     if grunt.option('debug')
       grunt.log.debug "Assets are on http://localhost:#{assets_port}/ – press ctr+c to finalize session"
@@ -126,6 +153,9 @@ task = (grunt, mode) ->
       grunt.log.debug "The following files are watched:"
       grunt.log.debug " - #{file}" for file in options['watch_files']
     else
+      #Reinstate the output stream
+      reporterCallback() if report_file
+
       # When testem is down – shutdown assets server,
       # free the port and finish the task
       assets.close ->
