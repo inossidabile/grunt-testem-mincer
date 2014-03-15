@@ -53,5 +53,33 @@ module.exports = (grunt) ->
           parallel: 8
           launch_in_dev: ['PhantomJS'],
           launch_in_ci: ['PhantomJS', 'Chrome', 'Firefox', 'Safari', 'IE7', 'IE8', 'IE9']
+      reporting:
+        src: [
+          'spec/reporting/**/*.*'
+        ]
+        report_file: 'report.tap'
+        options:
+          launch_in_dev: ['PhantomJS'],
+          launch_in_ci: ['PhantomJS'],
+          reporter: "tap"
+          on_exit: (config, data, callback) =>
+            callback()
+
+            error = (msg) ->
+              console.error msg
+              process.exit(1)
+
+            #Test output file exists and contains correct report data
+            fs = require "fs"
+            if fs.existsSync('report.tap')
+              try
+                output = fs.readFileSync('report.tap', 'utf-8')
+                
+                if output.toString().indexOf("# ok") != 77
+                  error "Unable to find the output report.tap file"
+              finally
+                fs.unlinkSync 'report.tap'
+            else
+              error "Unable to find the output report.tap file"
 
   grunt.registerTask 'default', ['testem']
