@@ -65,11 +65,12 @@ _The default `grunt testem` task runs all settled environments one by one in CI 
 
 ### Available options
 
-Every environment can take 3 arguments which are:
+Every environment can take 4 arguments which are:
 
   * `src`: the full list of files to run (allows unix glob masks: "path/**/*.*"). Files get included into playground in the order they are listed at the array.
   * `options`: options that get passed to running instance of Testem (they are typically located at Testem config)
   * `assets`: options that can be used to configure internal instance of Mincer preprocessor
+  * `report_file`: file path location for the output report file which is produced from running Testem.
 
 #### Testem options
 
@@ -121,6 +122,7 @@ So go ahead, take a look at these samples...
   * [Basic config](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/basic)
   * [Handling Mincer includes](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/minced)
   * [Custom builder in da area](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/custom)
+  * [Reporting config](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/reporting)
 
 ... and hurry up to start using it!
 
