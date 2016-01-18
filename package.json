@@ -1,7 +1,7 @@
 {
   "name": "grunt-testem-mincer",
   "description": "Testem programmatic runner enhanced with Mincer preprocessing",
-  "version": "0.5.17",
+  "version": "0.5.18",
   "homepage": "https://github.com/inossidabile/grunt-testem-mincer",
   "author": {
     "name": "Boris Staal",
