@@ -126,7 +126,7 @@ task = (grunt, mode) ->
     else
       cwd = environment.paths[0]
       grunt.file.expand({cwd: cwd}, @config("src") || []).forEach (match) ->
-        files[match] = Path.join(cwd, match)
+        files[match] = match
 
   # Options defaults
   options['launch_in_ci']  = [grunt.option('launch')] if grunt.option('launch')
