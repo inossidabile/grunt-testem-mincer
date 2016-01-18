@@ -1,7 +1,7 @@
-# grunt-contrib-testem
+# grunt-testem-mincer
 
-[![NPM version](https://badge.fury.io/js/grunt-contrib-testem.png)](http://badge.fury.io/js/grunt-contrib-testem)
-[![Build Status](https://travis-ci.org/inossidabile/grunt-contrib-testem.png?branch=master)](https://travis-ci.org/inossidabile/grunt-contrib-testem)
+[![NPM version](https://badge.fury.io/js/grunt-testem-mincer.png)](http://badge.fury.io/js/grunt-testem-mincer)
+[![Build Status](https://travis-ci.org/inossidabile/grunt-testem-mincer.png?branch=master)](https://travis-ci.org/inossidabile/grunt-testem-mincer)
 
 > Run tests with Testem in a convenient way:
 >
@@ -15,13 +15,13 @@ This plugin requires Grunt `~0.4.0`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-contrib-testem --save-dev
+npm install grunt-testem-mincer --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-contrib-testem');
+grunt.loadNpmTasks('grunt-testem-mincer');
 ```
 
 
@@ -55,7 +55,7 @@ grunt.initConfig({
   }
 ```
 
-In the example given we pass coffee files straight into the `src` and there's no mistake in that. `grunt-contrib-testem` will chew it for you :godmode:.
+In the example given we pass coffee files straight into the `src` and there's no mistake in that. `grunt-testem-mincer` will chew it for you :godmode:.
 
 There are two modes that you can run tests at:
   * `grunt testem:ci:<environment>` command-line CI mode
@@ -107,7 +107,7 @@ grunt.initConfig({
 
 ## Advanced usage
 
-Internally `grunt-contrib-testem` is powered by Mincer and it allows you to organize testing of almost any kind of code no matter how exactly it is organized and what preprocessing it requires. This is exactly how it works:
+Internally `grunt-testem-mincer` is powered by Mincer and it allows you to organize testing of almost any kind of code no matter how exactly it is organized and what preprocessing it requires. This is exactly how it works:
 
 <p align="center">
   <img src="http://f.cl.ly/items/0Q2u2v2c1C1e132R3L33/cloud.png">
@@ -119,10 +119,10 @@ What does it mean in other words? It means you can utilize Mincer during the bui
 
 So go ahead, take a look at these samples...
 
-  * [Basic config](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/basic)
-  * [Handling Mincer includes](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/minced)
-  * [Custom builder in da area](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/custom)
-  * [Reporting config](https://github.com/inossidabile/grunt-contrib-testem/tree/master/spec/reporting)
+  * [Basic config](https://github.com/inossidabile/grunt-testem-mincer/tree/master/spec/basic)
+  * [Handling Mincer includes](https://github.com/inossidabile/grunt-testem-mincer/tree/master/spec/minced)
+  * [Custom builder in da area](https://github.com/inossidabile/grunt-testem-mincer/tree/master/spec/custom)
+  * [Reporting config](https://github.com/inossidabile/grunt-testem-mincer/tree/master/spec/reporting)
 
 ... and hurry up to start using it!
 
@@ -140,4 +140,4 @@ Copyright 2013 [Boris Staal](http://staal.io)
 
 It is free software, and may be redistributed under the terms of MIT license.
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/inossidabile/grunt-contrib-testem/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/inossidabile/grunt-testem-mincer/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

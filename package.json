@@ -1,18 +1,18 @@
 {
-  "name": "grunt-contrib-testem",
+  "name": "grunt-testem-mincer",
   "description": "Testem programmatic runner enhanced with Mincer preprocessing",
   "version": "0.5.17",
-  "homepage": "https://github.com/inossidabile/grunt-contrib-testem",
+  "homepage": "https://github.com/inossidabile/grunt-testem-mincer",
   "author": {
     "name": "Boris Staal",
     "email": "boris@staal.io"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/inossidabile/grunt-contrib-testem.git"
+    "url": "git://github.com/inossidabile/grunt-testem-mincer.git"
   },
   "bugs": {
-    "url": "https://github.com/inossidabile/grunt-contrib-testem/issues"
+    "url": "https://github.com/inossidabile/grunt-testem-mincer/issues"
   },
   "engines": {
     "node": "*"

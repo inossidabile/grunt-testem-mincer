@@ -1,6 +1,6 @@
 module.exports = (grunt) ->
 
-  grunt.loadNpmTasks 'grunt-contrib-testem'
+  grunt.loadNpmTasks 'grunt-testem-mincer'
 
   # This is used to demonstrate the use of output files in your runner config
   grunt.initConfig

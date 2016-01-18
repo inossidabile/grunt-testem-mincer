@@ -1,6 +1,6 @@
 module.exports = (grunt) ->
 
-  grunt.loadNpmTasks 'grunt-contrib-testem'
+  grunt.loadNpmTasks 'grunt-testem-mincer'
 
   # Here we deal with slightly automated Mincer-based build
   grunt.initConfig
